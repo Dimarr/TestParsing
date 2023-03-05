@@ -71,7 +71,7 @@ def main():
     print("Started parsing")
     if args.mode.lower() != "append":
         Db.truncate_data()
-    if args.delcomp.lower() != "":
+    if args.delcomp:
         Db.delete_company(args.delcomp)
     load_data(args.file)
     try:
