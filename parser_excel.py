@@ -7,7 +7,7 @@ import pandas
 db_name = "result_db.sqlite3"
 mnth = "02"
 year = "2023"
-types = ["fact", "forecast"]  # The type of possible values
+types = ["fact", "forecast"]  # The type of possible values in file
 
 global Db
 Db = Database(db_name)
@@ -35,9 +35,9 @@ def load_data(file: str):
             type_2_data_start = i
 
     for el_ in sheet1.values:
-        try:
+        try: # Skipping head
             if int(el_[0]) > 0:
-                day = f"0{str(int(el_[0]) % 28 + 1)}"
+                day = f"0{str(int(el_[0]) % 28 + 1)}" # Generates day for program date below
                 dt = f"{year}-{mnth}-{day[-2:]}"
                 comp = el_[1]
                 for j, type_ in enumerate(types):
@@ -75,7 +75,7 @@ def main():
         Db.delete_company(args.delcomp)
     load_data(args.file)
     try:
-        output_data = Db.print_total()
+        output_data = Db.print_total() # Generates Totals data
         pandas.DataFrame(output_data).to_excel(f'{args.output}', header=False, index=False)
         print(f"File {args.output} was created successfully")
     except Exception as err:
